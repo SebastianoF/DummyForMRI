@@ -14,8 +14,8 @@ if __name__ == '__main__':
     if not os.path.exists(pfo_examples):
         os.mkdir(pfo_examples)
 
-    if os.path.exists(pfo_atlas):
-        os.system('rm -r {}'.format(pfo_atlas))
+    # if os.path.exists(pfo_atlas):
+    #     os.system('rm -r {}'.format(pfo_atlas))
 
     os.system('mkdir -p {}'.format(pfo_atlas))
 
@@ -23,8 +23,8 @@ if __name__ == '__main__':
     name_ground_truth   = ('modGT', 'segmGT')
     name_modalities     = ('mod1', 'mod2')
 
-    generate_atlas(pfo_atlas, atlas_name='Sam', randomness_shape=0.3, randomness_noise=0.4,
-                   name_modalities=name_modalities, name_ground_truth=name_ground_truth)
+    # generate_atlas(pfo_atlas, atlas_name='Sam', randomness_shape=0.3, randomness_noise=0.4,
+    #                name_modalities=name_modalities, name_ground_truth=name_ground_truth)
 
     pfi_ld = jph(pfo_examples, 'labels_descriptor.txt')
     generate_labels_descriptor(pfi_ld)
@@ -38,5 +38,5 @@ if __name__ == '__main__':
         pfi_first_modality  = jph(pfo_atlas, 'mod', '{}_{}.nii.gz'.format(id_to_open, name_modalities[0]))
         pfi_second_modality = jph(pfo_atlas, 'mod', '{}_{}.nii.gz'.format(id_to_open, name_modalities[1]))
 
-        os.system('itksnap -g {} -s {} -l {} -o {} {}'.format(pfi_ground_truth, pfi_ground_segm, pfi_first_modality,
+        os.system('itksnap -g {} -s {} -o {} {} -l {}'.format(pfi_ground_truth, pfi_ground_segm, pfi_first_modality,
                                                               pfi_second_modality, pfi_ld))
