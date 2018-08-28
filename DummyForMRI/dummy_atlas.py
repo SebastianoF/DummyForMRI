@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import ndimage
 
-from shapes_for_phantoms import oval_shape, sulci_structure, ellipsoid_shape
+from building_blocks import oval_shape, sulci_structure, ellipsoid_shape
 
 
 def headlike_phantom(omega=(161, 181, 201), intensities=(0.9, 0.3, 0.6, 0.8), random_perturbation=.0):

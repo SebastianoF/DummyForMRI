@@ -5,13 +5,13 @@ import nibabel as nib
 import numpy as np
 import scipy.ndimage.filters as fil
 
-from shapes_for_headlike_phantoms import headlike_phantom
-from shapes_for_phantoms import sphere_shape
+from building_blocks import sphere_shape
+from dummy_atlas import headlike_phantom
 from utils import generate_dummy_labels_descriptor
 
 
 def generate_atlas_at_folder(pfo_where_to_save_atlas, atlas_name='t01', randomness_shape=0.3, randomness_noise=0.4,
-                             get_labels_descriptor=False, labels_descriptor_name='label_descriptor.txt'):
+                             get_labels_descriptor=False):
 
     assert os.path.exists(pfo_where_to_save_atlas), 'Input folder {} does not exist'.format(pfo_where_to_save_atlas)
     pfo_mod = jph(pfo_where_to_save_atlas, 'mod')
@@ -83,12 +83,10 @@ def generate_atlas_at_folder(pfo_where_to_save_atlas, atlas_name='t01', randomne
     nib.save(im_roi_mask, jph(pfo_masks, '{}_roi_mask.nii.gz'.format(atlas_name)))
     nib.save(im_reg_mask, jph(pfo_masks, '{}_reg_mask.nii.gz'.format(atlas_name)))
 
-    if get_labels_descriptor:
+
+def generate_labels_descriptor(pfo_where_to_save_atlas, labels_descriptor_name):
         pfi_label_descriptor = jph(pfo_where_to_save_atlas, labels_descriptor_name)
-        generate_dummy_labels_descriptor(pfi_label_descriptor, list_labels=range(5),
-                                        list_roi_names=['Bkg', 'Skull', 'WM', 'GM', 'CSF'],
-                                        list_colors_triplets=[[0, 0, 0], [255, 0, 0], [0, 255, 0],
-                                                              [0, 0, 255], [255, 0, 255]])
+        generate_dummy_labels_descriptor()
 
 
 def generate_multi_atlas_at_folder(pfo_where_to_create_the_multi_atlas, number_of_subjects=10,

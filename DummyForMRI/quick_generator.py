@@ -5,8 +5,7 @@ import os
 from os.path import join as jph
 
 from definitions import root_dir
-from generate_phantom_multi_atlas import generate_atlas_at_folder, generate_multi_atlas_at_folder
-
+from dummy_multi_atlas import generate_atlas_at_folder, generate_multi_atlas_at_folder
 
 pfo_examples     = jph(root_dir, 'data_examples')
 pfo_target_atlas = jph(pfo_examples, 'dummy_target')
