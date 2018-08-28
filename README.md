@@ -1,5 +1,9 @@
 # DummyForMRI
 
+<p align="center"> 
+<img src="https://github.com/SebastianoF/DummyForMRI/blob/master/screenshots/Danny_3d_view.jpg" width="350">
+</p>
+
 Simple dummy generator for non-realistic multi-atlas. 
 Can be useful for quick testing of pipelines and algorithms.
  
