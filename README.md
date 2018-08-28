@@ -4,7 +4,7 @@
 <img src="https://github.com/SebastianoF/DummyForMRI/blob/master/screenshots/Danny_3d_view.jpg" width="550">
 </p>
 
-Simple dummy generator for non-realistic multi-atlas. 
+Very simple dummy generator for non-realistic multi-atlas. 
 Can be useful for quick testing of pipelines and algorithms.
  
 ### Features
@@ -25,15 +25,15 @@ pip install -e .
 
 ### Before you start...
 
-A list of other dummies for MRI studies:
+A list of other options:
 
-+ [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/) A realistic synthetic generated multi-atlas, one modality and its ground truth segmentation for 
++ [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/): a realistic and accurate synthetic generated multi-atlas, one modality and its ground truth segmentation for 
 20 subjects (see as well the helper [BrainWebRawToNifti](https://github.com/SebastianoF/BrainWebRawToNifti)).   
 + [CT-Synthetic-MR-Images](https://github.com/zoukai214/CT-Synthetic-MR-Images)  
-+ [ICW-fMRI-GAN](https://github.com/BlissChapman/ICW-fMRI-GAN) conditional wasserstein generative adversarial network (ICW-GAN) that is trained to generate synthetic 
++ [ICW-fMRI-GAN](https://github.com/BlissChapman/ICW-fMRI-GAN): code for a conditional wasserstein generative adversarial network (ICW-GAN) that is trained to generate synthetic 
 fMRI data samples
-+ [Phantomas](https://github.com/ecaruyer/phantomas) Python and C library for the creation of realistic phantoms in 
-diffusion MRI. It is  is intented as a tool for the validation of methods in acquisition, signal and image processing, local reconstruction and fiber tracking.
++ [Phantomas](https://github.com/ecaruyer/phantomas): Python and C based library for the creation of realistic phantoms in 
+diffusion MRI. It is intended as a tool for the validation of methods in acquisition, signal and image processing, local reconstruction and fiber tracking.
 
 ### Licencing and Copyright
 
