@@ -7,13 +7,44 @@ import scipy.ndimage.filters as fil
 
 from building_blocks import sphere_shape
 from dummy_atlas import headlike_phantom
-from utils import generate_dummy_labels_descriptor
 
 
-def generate_atlas_at_folder(pfo_where_to_save_atlas, atlas_name='t01', randomness_shape=0.3, randomness_noise=0.4,
-                             get_labels_descriptor=False):
 
-    assert os.path.exists(pfo_where_to_save_atlas), 'Input folder {} does not exist'.format(pfo_where_to_save_atlas)
+def generate_labels_descriptor(pfi_where_to_save):
+    descriptor_standard_header = \
+"""################################################
+# ITK-SnAP Label Description File
+# File format:
+# IDX   -R-  -G-  -B-  -A--  VIS MSH  LABEL
+# Fields:
+#    IDX:   Zero-based index
+#    -R-:   Red color component (0..255)
+#    -G-:   Green color component (0..255)
+#    -B-:   Blue color component (0..255)
+#    -A-:   Label transparency (0.00 .. 1.00)
+#    VIS:   Label visibility (0 or 1)
+#    IDX:   Label mesh visibility (0 or 1)
+#  LABEL:   Label description
+################################################
+"""
+    descriptor_data_for_atlas = \
+"""    0     0     0     0      1.0     1     1    "Bkg"
+    1   255     0     0      1.0     1     1    "Skull"
+    2     0   255     0      1.0     1     1    "WM"
+    3     0     0   255      1.0     1     1    "GM"
+    4   255     0   255      1.0     1     1    "CSF"
+"""
+    with open(pfi_where_to_save, 'w+') as f:
+        f.write(descriptor_standard_header)
+        f.write(descriptor_data_for_atlas)
+    print('Dummy labels descriptor saved under {}'.format(pfi_where_to_save))
+
+
+def generate_atlas(pfo_where_to_save_atlas, atlas_name='t01', randomness_shape=0.3, randomness_noise=0.4,
+                   name_modalities=('mod1', 'mod2'), name_ground_truth=('mod_GT', 'segmGT')):
+
+    os.system('mkdir -p {}'.format(pfo_where_to_save_atlas))
+
     pfo_mod = jph(pfo_where_to_save_atlas, 'mod')
     pfo_segm = jph(pfo_where_to_save_atlas, 'segm')
     pfo_masks = jph(pfo_where_to_save_atlas, 'masks')
@@ -25,14 +56,15 @@ def generate_atlas_at_folder(pfo_where_to_save_atlas, atlas_name='t01', randomne
     # B) Create modality and segmentation ground truth:
     intensities = (0.9, 0.3, 0.6, 0.8)
     omega = (80, 90, 80)
-    print('In folder {}'.format(pfo_where_to_save_atlas))
+    print('in folder {}'.format(pfo_where_to_save_atlas))
     mod_gt, segm_gt = headlike_phantom(omega=omega, random_perturbation=randomness_shape, intensities=intensities)
 
     # B1) get roi mask (from the ground truth):
+    print('- generate segmentation')
     roi_mask = segm_gt.astype(np.bool)
 
     # C) Create other modalities
-
+    print('- generate other dummy-modalities')
     # -- invert intensities:
     mod_inv = 1 - mod_gt
     np.place(mod_inv, mod_inv == 1, 0)
@@ -68,7 +100,7 @@ def generate_atlas_at_folder(pfo_where_to_save_atlas, atlas_name='t01', randomne
     # D) Get the Registration Mask (based on):
     reg_mask = noise_hypo * roi_mask
 
-    # E) save all in the data structure
+    # E) Generate nifti data structure
     im_segm_gt  = nib.Nifti1Image(segm_gt, affine=np.eye(4))
     im_mod_gt   = nib.Nifti1Image(mod_gt, affine=np.eye(4))
     im_mod1     = nib.Nifti1Image(mod_gt_noise, affine=np.eye(4))
@@ -76,21 +108,19 @@ def generate_atlas_at_folder(pfo_where_to_save_atlas, atlas_name='t01', randomne
     im_roi_mask = nib.Nifti1Image(roi_mask.astype(np.int32), affine=np.eye(4))
     im_reg_mask = nib.Nifti1Image(reg_mask.astype(np.int32), affine=np.eye(4))
 
-    nib.save(im_segm_gt, jph(pfo_segm, '{}_segmGT.nii.gz'.format(atlas_name)))
-    nib.save(im_mod_gt, jph(pfo_mod, '{}_modGT.nii.gz'.format(atlas_name)))
-    nib.save(im_mod1, jph(pfo_mod, '{}_mod1.nii.gz'.format(atlas_name)))
-    nib.save(im_mod2, jph(pfo_mod, '{}_mod2.nii.gz'.format(atlas_name)))
+    # E) Save nifti data structure
+    print('- saving... ')
+    nib.save(im_mod_gt,   jph(pfo_mod,   '{}_{}.nii.gz'.format(atlas_name, name_ground_truth[0])))
+    nib.save(im_segm_gt,  jph(pfo_segm,  '{}_{}.nii.gz'.format(atlas_name, name_ground_truth[1])))
+    nib.save(im_mod1,     jph(pfo_mod,   '{}_{}.nii.gz'.format(atlas_name, name_modalities[0])))
+    nib.save(im_mod2,     jph(pfo_mod,   '{}_{}.nii.gz'.format(atlas_name, name_modalities[1])))
     nib.save(im_roi_mask, jph(pfo_masks, '{}_roi_mask.nii.gz'.format(atlas_name)))
     nib.save(im_reg_mask, jph(pfo_masks, '{}_reg_mask.nii.gz'.format(atlas_name)))
 
 
-def generate_labels_descriptor(pfo_where_to_save_atlas, labels_descriptor_name):
-        pfi_label_descriptor = jph(pfo_where_to_save_atlas, labels_descriptor_name)
-        generate_dummy_labels_descriptor()
-
-
-def generate_multi_atlas_at_folder(pfo_where_to_create_the_multi_atlas, number_of_subjects=10,
-                                   multi_atlas_root_name='sj', randomness_shape=0.3, randomness_noise=0.4):
+def generate_multi_atlas(pfo_where_to_create_the_multi_atlas, number_of_subjects=10, multi_atlas_root_name='sj',
+                         randomness_shape=0.3, randomness_noise=0.4,
+                         name_modalities=('mod1', 'mod2'), name_ground_truth=('mod_GT', 'segmGT')):
     """
     Generate a phatom multi atlas of head-like shapes.
     This is based on nilabel.tools.phantoms_generator.shapes_for_headlike_phantoms.headlike_phantom
@@ -102,10 +132,12 @@ def generate_multi_atlas_at_folder(pfo_where_to_create_the_multi_atlas, number_o
     :param randomness_noise: randomness in the simulated noise signal and artefacts. Must be between 0 and 1.
     :return:
     """
-    os.system('mkdir {}'.format(pfo_where_to_create_the_multi_atlas))
+    os.system('mkdir -p {}'.format(pfo_where_to_create_the_multi_atlas))
+
     for sj in range(number_of_subjects):
-        sj_name = multi_atlas_root_name + str(sj + 1).zfill(len(str(number_of_subjects)) + 1)
+        sj_name = multi_atlas_root_name + str(sj + 1).zfill(len(str(number_of_subjects)))
         print('\n\nCreating atlas {0} ({1}/{2})'.format(sj_name, sj+1, number_of_subjects))
         os.system('mkdir {}'.format(jph(pfo_where_to_create_the_multi_atlas, sj_name)))
-        generate_atlas_at_folder(jph(pfo_where_to_create_the_multi_atlas, sj_name), atlas_name=sj_name,
-                                 randomness_shape=randomness_shape, randomness_noise=randomness_noise)
+        generate_atlas(jph(pfo_where_to_create_the_multi_atlas, sj_name), atlas_name=sj_name,
+                       randomness_shape=randomness_shape, randomness_noise=randomness_noise,
+                       name_modalities=name_modalities, name_ground_truth=name_ground_truth)

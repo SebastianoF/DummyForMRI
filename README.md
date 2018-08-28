@@ -3,13 +3,13 @@
 Simple dummy generator for non-realistic multi-atlas. 
 Can be useful for quick testing of pipelines and algorithms.
  
-#### Features
+### Features
 
 + Pure python 3.6, backcompatible with python 2.7 and 3.5.
 + Simple creation of headlike shape phantom and ITK-snap compatible labels descriptor.
 + Open source and available on [github](https://github.com/SebastianoF/DummyForMRI).
 
-#### Install
+### Install
 
 Suggested installation in [development mode](https://avolkov.github.io/installing-python-packages-in-development-mode.html):
 ```bash
@@ -19,11 +19,11 @@ cd DummyForMRI
 pip install -e .
 ```
 
-#### Before you start...
+### Before you start...
 
 A list of other dummies for MRI studies:
 
-+ [BrainWeb]() :A realistic synthetic generated multi-atlas, one modality and its ground truth segmentation for 
++ [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/) A realistic synthetic generated multi-atlas, one modality and its ground truth segmentation for 
 20 subjects (see as well the helper [BrainWebRawToNifti](https://github.com/SebastianoF/BrainWebRawToNifti)).   
 + [CT-Synthetic-MR-Images](https://github.com/zoukai214/CT-Synthetic-MR-Images)  
 + [ICW-fMRI-GAN](https://github.com/BlissChapman/ICW-fMRI-GAN) conditional wasserstein generative adversarial network (ICW-GAN) that is trained to generate synthetic 
