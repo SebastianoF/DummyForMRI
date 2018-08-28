@@ -2,7 +2,7 @@ import os
 import subprocess
 from os.path import join as jph
 
-from definitions import root_dir
+from DummyForMRI.definitions import root_dir
 from DummyForMRI.dummy_multi_atlas import generate_multi_atlas, generate_labels_descriptor
 
 

@@ -5,8 +5,8 @@ import nibabel as nib
 import numpy as np
 import scipy.ndimage.filters as fil
 
-from building_blocks import sphere_shape
-from dummy_atlas import headlike_phantom
+from DummyForMRI.building_blocks import sphere_shape
+from DummyForMRI.dummy_atlas import headlike_phantom
 
 
 
