@@ -2,11 +2,12 @@ import os
 import subprocess
 from os.path import join as jph
 
-from DummyForMRI.definitions import root_dir
-from DummyForMRI.dummy_multi_atlas import generate_atlas, generate_labels_descriptor
+from DummyForMRI.generators import generate_atlas, generate_labels_descriptor
 
 
 if __name__ == '__main__':
+
+    root_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 
     pfo_examples = jph(root_dir, 'data_examples')
     pfo_atlas    = jph(pfo_examples, 'Sam')

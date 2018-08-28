@@ -11,7 +11,8 @@ Can be useful for quick testing of pipelines and algorithms.
 
 + Pure python 3.6, backcompatible with python 2.7 and 3.5.
 + Simple creation of headlike shape phantom and ITK-snap compatible labels descriptor.
-+ Open source and available on [github](https://github.com/SebastianoF/DummyForMRI).
++ Open source, open to improvements and available on [github](https://github.com/SebastianoF/DummyForMRI).
++ About the geometry: the random variability between randomly generated shape makes an affine registration not enough to compensate for the geometrical differences.
 
 ### Install
 
@@ -28,12 +29,16 @@ pip install -e .
 A list of other options:
 
 + [BrainWeb](http://brainweb.bic.mni.mcgill.ca/brainweb/): a realistic and accurate synthetic generated multi-atlas, one modality and its ground truth segmentation for 
-20 subjects (see as well the helper [BrainWebRawToNifti](https://github.com/SebastianoF/BrainWebRawToNifti)).   
-+ [CT-Synthetic-MR-Images](https://github.com/zoukai214/CT-Synthetic-MR-Images)  
+20 subjects (see as well the helper [BrainWebRawToNifti](https://github.com/SebastianoF/BrainWebRawToNifti)).     
 + [ICW-fMRI-GAN](https://github.com/BlissChapman/ICW-fMRI-GAN): code for a conditional wasserstein generative adversarial network (ICW-GAN) that is trained to generate synthetic 
 fMRI data samples
-+ [Phantomas](https://github.com/ecaruyer/phantomas): Python and C based library for the creation of realistic phantoms in 
-diffusion MRI. It is intended as a tool for the validation of methods in acquisition, signal and image processing, local reconstruction and fiber tracking.
++ [Phantomas](https://github.com/ecaruyer/phantomas): Python 2.7 and Cython based library for the creation of realistic tissue 
+phantoms in diffusion MRI. It is intended as a tool for the validation of methods in acquisition, signal and image 
+processing, local reconstruction and fiber tracking.
+
+### Usage
+
+[Examples](https://github.com/SebastianoF/DummyForMRI/tree/master/examples) folder is the starting point.
 
 ### Licencing and Copyright
 

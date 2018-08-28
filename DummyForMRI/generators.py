@@ -5,9 +5,7 @@ import nibabel as nib
 import numpy as np
 import scipy.ndimage.filters as fil
 
-from DummyForMRI.building_blocks import sphere_shape
-from DummyForMRI.dummy_atlas import headlike_phantom
-
+from DummyForMRI.building_blocks import sphere_shape, headlike_phantom
 
 
 def generate_labels_descriptor(pfi_where_to_save):
