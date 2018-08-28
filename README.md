@@ -1,7 +1,7 @@
 # DummyForMRI
 
 <p align="center"> 
-<img src="https://github.com/SebastianoF/DummyForMRI/blob/master/screenshots/Danny_3d_view.jpg" width="350">
+<img src="https://github.com/SebastianoF/DummyForMRI/blob/master/screenshots/Danny_3d_view.jpg" width="550">
 </p>
 
 Simple dummy generator for non-realistic multi-atlas. 
